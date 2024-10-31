@@ -48,27 +48,28 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
 });
 
 /**
- * Check the URL for the reverse parameter and send a message to the content
- * script to toggle the highlight
+ * Extract the reverse parameter from a URL
  *
- * @param tabId The ID of the tab
- * @param url The URL of the tab
+ * @param url - The URL to check
+ * @returns boolean - True if reverse is "true"; otherwise, false
+ */
+const getReverseParam = (url: string): boolean => {
+  const urlObj = new URL(url);
+  return urlObj.searchParams.get("reverse") === "true";
+};
+
+/**
+ * Send or queue a message to toggle highlight in the content script
+ *
+ * @param tabId - The ID of the tab
+ * @param message - The message to be sent or queued
  * @returns void
  */
-const checkAndToggleHighlight = (tabId: TabId, url: string): void => {
-  if (!isValidTabId(tabId)) {
-    return;
-  }
-
-  const urlObj = new URL(url);
-  const reverse = urlObj.searchParams.get("reverse") === "true";
+const sendHighlightToggleMessage = (
+  tabId: TabId,
+  message: MessageResponse
+): void => {
   const port = ports.get(tabId);
-
-  const message: MessageResponse = {
-    messageAction: MessageAction.TOGGLE_HIGHLIGHT,
-    payload: { reverse },
-  };
-
   if (port) {
     port.postMessage(message);
   } else {
@@ -76,9 +77,29 @@ const checkAndToggleHighlight = (tabId: TabId, url: string): void => {
     if (!messageQueue.has(tabId)) {
       messageQueue.set(tabId, []);
     }
-
     messageQueue.get(tabId)!.push(message);
   }
+};
+
+/**
+ * Check the URL for the reverse parameter and toggle the highlight
+ *
+ * @param tabId - The ID of the tab
+ * @param url - The URL of the tab
+ * @returns void
+ */
+const checkAndToggleHighlight = (tabId: TabId, url: string): void => {
+  if (!isValidTabId(tabId)) {
+    return;
+  }
+
+  const reverse = getReverseParam(url);
+  const message: MessageResponse = {
+    messageAction: MessageAction.TOGGLE_HIGHLIGHT,
+    payload: { reverse },
+  };
+
+  sendHighlightToggleMessage(tabId, message);
 };
 
 // Monitor tab updates to check for the reverse parameter
