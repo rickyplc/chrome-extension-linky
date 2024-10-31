@@ -1,10 +1,12 @@
-# Omniplex Learning Technical Test
+# Chrome Extension - Linky
 
 ## Getting Started
 
 1. Clone this repository locally
-2. You may need to install esbuild using `npm -g install esbuild`
-3. Run `npm run build`
+2. Use `nvm` to install (_[How to install?](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)_) the correct version of Node.js, currently `22.11.0` from the `.nvmrc` file
+3. Run `nvm use` to switch to the correct version of node
+4. Run `npm install` to install the dependencies
+5. Run the build script `npm run build` to compile the extension
 
 ## Loading into Chrome
 
@@ -15,7 +17,7 @@
 
 ## The Task
 
-1. The extension should detect all links and buttons on page
+1. The extension should detect all links and buttons on the page
 2. It should pull the tag name and, if it's a link, the href attribute
 3. These should be passed to the background script and stored in extension local storage against the URL they were captured from
    1. **Note:** Not local storage on the site
