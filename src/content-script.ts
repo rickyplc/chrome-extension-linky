@@ -19,12 +19,12 @@ const styleElementOutline = (element: string, color: string): void => {
 /**
  * Highlight the elements on the page
  *
- * @param reverse Whether to reverse the highlight colors
+ * @param shouldReverse Whether to reverse the highlight colors
  * @returns void
  */
-const highlightPageElements = (reverse: boolean = false): void => {
-  const linkColor = reverse ? "blue" : "orange";
-  const buttonColor = reverse ? "orange" : "blue";
+const highlightPageElements = (shouldReverse: boolean = false): void => {
+  const linkColor = shouldReverse ? "blue" : "orange";
+  const buttonColor = shouldReverse ? "orange" : "blue";
 
   styleElementOutline("a", linkColor);
   styleElementOutline("button", buttonColor);
