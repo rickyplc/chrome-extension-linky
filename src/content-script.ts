@@ -72,14 +72,12 @@ const sendElementsData = (): void => {
 // Listen for messages from the background script via the port
 port.onMessage.addListener((request: MessageResponse) => {
   if (request.messageAction === MessageAction.TOGGLE_HIGHLIGHT) {
-    highlightElements(request.payload.reverse);
+    highlightPageElements(request.payload.reverse);
   }
 });
 
 // Initial execution
 (() => {
-  highlightElements();
-
-  // Send elements data to the background script
+  highlightPageElements();
   sendElementsData();
 })();
