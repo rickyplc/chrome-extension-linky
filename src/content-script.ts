@@ -3,14 +3,26 @@ import { TagLinks } from "./types/links";
 
 const port = chrome.runtime.connect();
 
+/**
+ * Style the outline of the elements
+ *
+ * @param element The element to style
+ * @param color The color of the outline
+ * @returns void
+ */
 const styleElementOutline = (element: string, color: string): void => {
   document.querySelectorAll(element).forEach((el) => {
     (el as HTMLElement).style.outline = `1px solid ${color}`;
   });
 };
 
-// Function to highlight elements
-const highlightElements = (reverse: boolean = false): void => {
+/**
+ * Highlight the elements on the page
+ *
+ * @param reverse Whether to reverse the highlight colors
+ * @returns void
+ */
+const highlightPageElements = (reverse: boolean = false): void => {
   const linkColor = reverse ? "blue" : "orange";
   const buttonColor = reverse ? "orange" : "blue";
 
@@ -18,7 +30,11 @@ const highlightElements = (reverse: boolean = false): void => {
   styleElementOutline("button", buttonColor);
 };
 
-// Function to collect elements data
+/**
+ * Collect the elements data from the page
+ *
+ * @returns TagLinks The elements data collected from the page
+ */
 const collectElementsData = (): TagLinks => {
   const elementsData: TagLinks = [];
 
@@ -36,6 +52,11 @@ const collectElementsData = (): TagLinks => {
   return elementsData;
 };
 
+/**
+ * Send the elements data to the background script
+ *
+ * @returns void
+ */
 const sendElementsData = (): void => {
   const elements = collectElementsData();
 

@@ -46,6 +46,14 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
   }
 });
 
+/**
+ * Check the URL for the reverse parameter and send a message to the content
+ * script to toggle the highlight
+ *
+ * @param tabId The ID of the tab
+ * @param url The URL of the tab
+ * @returns void
+ */
 const checkAndToggleHighlight = (tabId: number, url: string): void => {
   const urlObj = new URL(url);
   const reverse = urlObj.searchParams.get("reverse") === "true";
