@@ -1,4 +1,4 @@
-import { MessageAction, MessageResponse } from "./types/messaging";
+import { MessageAction, MessageResponse, TabId } from "./types/messaging";
 import { withDefault } from "./types/utils";
 
 const ports = new Map<number, chrome.runtime.Port>();
@@ -6,7 +6,7 @@ const messageQueue = new Map<number, MessageResponse[]>();
 
 // Listen for connections from content scripts
 chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
-  const tabId = port.sender?.tab?.id;
+  const tabId: TabId = port.sender?.tab?.id;
 
   if (tabId === undefined) {
     return;
@@ -54,7 +54,11 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
  * @param url The URL of the tab
  * @returns void
  */
-const checkAndToggleHighlight = (tabId: number, url: string): void => {
+const checkAndToggleHighlight = (tabId: TabId, url: string): void => {
+  if (tabId === undefined) {
+    return;
+  }
+
   const urlObj = new URL(url);
   const reverse = urlObj.searchParams.get("reverse") === "true";
   const port = ports.get(tabId);

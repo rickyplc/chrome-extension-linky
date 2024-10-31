@@ -23,3 +23,5 @@ export interface MessageResponse {
   messageAction: MessageAction;
   payload: MessagePayload;
 }
+
+export type TabId = number | undefined;
