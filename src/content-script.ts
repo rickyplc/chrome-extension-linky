@@ -59,14 +59,15 @@ const collectElementsData = (): TagLinks => {
  */
 const sendElementsData = (): void => {
   const elements = collectElementsData();
-
-  port.postMessage({
-    message: MessageAction.STORE_ELEMENTS,
+  const message: MessageResponse = {
+    messageAction: MessageAction.STORE_ELEMENTS,
     payload: {
       url: window.location.href,
       elements,
     },
-  });
+  };
+
+  port.postMessage(message);
 };
 
 // Listen for messages from the background script via the port
