@@ -6,12 +6,19 @@ export enum MessageAction {
   TOGGLE_HIGHLIGHT = "toggle_highlight",
 }
 
+/**
+ * Message payload to send to the background script or content script
+ */
 export interface MessagePayload {
   elements?: TagLinks;
   reverse?: boolean;
   url?: string;
 }
 
+/**
+ * Message response from the background script to
+ * the content script or vice versa
+ */
 export interface MessageResponse {
   messageAction: MessageAction;
   payload: MessagePayload;
