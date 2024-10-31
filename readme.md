@@ -10,7 +10,7 @@
 
 ## Loading into Chrome
 
-1. Open [chrome://extensions](chrome://extensions) in Google Chrome
+1. Open [`chrome://extensions`](chrome://extensions) in Google Chrome
 2. Enable Debug Mode
 3. Select **Load Unpacked**
 4. Select the build directory from your cloned repository
