@@ -63,7 +63,7 @@ const checkAndToggleHighlight = (tabId: TabId, url: string): void => {
   const reverse = urlObj.searchParams.get("reverse") === "true";
   const port = ports.get(tabId);
 
-  const message = {
+  const message: MessageResponse = {
     messageAction: MessageAction.TOGGLE_HIGHLIGHT,
     payload: { reverse },
   };
