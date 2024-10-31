@@ -12,7 +12,7 @@
   "private": true,
   "dependencies": {
     "@types/chrome": "0.0.268",
-    "esbuild": "^0.21.4",
+    "esbuild": "^0.21.5",
     "esbuild-plugin-copy": "^2.1.1"
   }
 }
