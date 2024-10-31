@@ -1,5 +1,6 @@
 import { MessageAction, MessageResponse, TabId } from "./types/messaging";
 import { withDefault } from "./types/utils";
+import { isValidTabId } from "./types/guards";
 
 const ports = new Map<TabId, chrome.runtime.Port>();
 const messageQueue = new Map<TabId, MessageResponse[]>();
@@ -8,7 +9,7 @@ const messageQueue = new Map<TabId, MessageResponse[]>();
 chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
   const tabId: TabId = port.sender?.tab?.id;
 
-  if (tabId === undefined) {
+  if (!isValidTabId(tabId)) {
     return;
   }
 
@@ -55,7 +56,7 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
  * @returns void
  */
 const checkAndToggleHighlight = (tabId: TabId, url: string): void => {
-  if (tabId === undefined) {
+  if (!isValidTabId(tabId)) {
     return;
   }
 
