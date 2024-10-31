@@ -1,4 +1,11 @@
-import { MessageAction, MessageResponse, TabId } from "./types/messaging";
+import {
+  MessageAction,
+  MessageResponse,
+  TabId,
+  TabStatus,
+  UrlQueryParam,
+  DefaultUrl,
+} from "./types/messaging";
 import { withDefault } from "./types/utils";
 import { isValidTabId } from "./types/guards";
 
@@ -19,7 +26,7 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
   port.onMessage.addListener((request: MessageResponse) => {
     if (request.messageAction === MessageAction.STORE_ELEMENTS) {
       const { url, elements } = request.payload;
-      const safeUrl = withDefault(url, "no_url");
+      const safeUrl = withDefault(url, DefaultUrl.NONE);
 
       // Store elements data in Chrome local storage
       chrome.storage.local.set({ [safeUrl]: elements });
@@ -55,7 +62,7 @@ chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
  */
 const getReverseParam = (url: string): boolean => {
   const urlObj = new URL(url);
-  return urlObj.searchParams.get("reverse") === "true";
+  return urlObj.searchParams.get(UrlQueryParam.REVERSE) === "true";
 };
 
 /**
@@ -104,7 +111,7 @@ const checkAndToggleHighlight = (tabId: TabId, url: string): void => {
 
 // Monitor tab updates to check for the reverse parameter
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.status === "complete" && tab.url) {
+  if (changeInfo.status === TabStatus.LOADED && tab.url) {
     checkAndToggleHighlight(tabId, tab.url);
   }
 });

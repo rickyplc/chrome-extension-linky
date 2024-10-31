@@ -24,4 +24,28 @@ export interface MessageResponse {
   payload: MessagePayload;
 }
 
+/**
+ * Type for the browser tab ID.
+ */
 export type TabId = number | undefined;
+
+/**
+ * Enum for browser tab status.
+ */
+export enum TabStatus {
+  LOADED = "complete",
+}
+
+/**
+ * Enum for URL query parameters.
+ */
+export enum UrlQueryParam {
+  REVERSE = "reverse",
+}
+
+/**
+ * Enum for default/fallback URL values.
+ */
+export enum DefaultUrl {
+  NONE = "no_url",
+}
