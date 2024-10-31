@@ -11,15 +11,26 @@
     "48": "images/icons/icon_content_48.png",
     "128": "images/icons/icon_content_128.png"
   },
-  "permissions": [],
-  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["content-script.js"],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
       "run_at": "document_end",
       "all_frames": true
     }
