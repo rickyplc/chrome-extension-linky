@@ -1,8 +1,8 @@
 import { MessageAction, MessageResponse, TabId } from "./types/messaging";
 import { withDefault } from "./types/utils";
 
-const ports = new Map<number, chrome.runtime.Port>();
-const messageQueue = new Map<number, MessageResponse[]>();
+const ports = new Map<TabId, chrome.runtime.Port>();
+const messageQueue = new Map<TabId, MessageResponse[]>();
 
 // Listen for connections from content scripts
 chrome.runtime.onConnect.addListener((port: chrome.runtime.Port) => {
